@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "baseUrl": "./",
+    "outDir": "dist",
+    "target": "es2017",
+    "types": ["reflect-metadata","node"],
+    "typeRoots": [ // paths where to find types
+      "node_modules/@types",
+      "src/types"
+    ],
+    "paths": { // path mapping for imports (so we can write 'express' and it will find it in node_modules/express).
+      "@/*": ["src/*"],
+      "*": [
+        "node_modules/*",
+        "src/types/*"
+      ]
+    },
+    "lib": [ // extra libraries to include when checking code
+      "es2017",
+      "esnext.asynciterable",
+      "dom"
+    ],
+    // "sourceRoot": "src", // Specifies the location where debugger should locate TypeScript files instead of source locations. Use this flag if the sources will be located at run-time in a different location than that at design-time. The location specified will be embedded in the sourceMap to direct the debugger where the source files will be located.
+    "sourceMap": true, // needed for ts-node debugging.
+    "removeComments": true,
+    "esModuleInterop": true,
+    // "declaration": true, // usable when creating npm package. It creates .d.ts files so other people can use types of this package.
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "LF",
+    "listEmittedFiles": false,
+    // checks
+    "strict": true,
+    /* Strict Type-Checking Options, set to true by default when  "strict": true */
+    // "noImplicitAny": true,
+    // "noImplicitThis": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noImplicitReturns": true,
+    // "strictFunctionTypes": true,
+    // "strictPropertyInitialization": true,
+    // "strictNullChecks": true,
+    "noFallthroughCasesInSwitch": true,
+    "experimentalDecorators": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules/**"
+  ],
+  "compileOnSave": true
+}

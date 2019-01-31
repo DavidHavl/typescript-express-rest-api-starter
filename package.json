@@ -1,0 +1,71 @@
+{
+  "name": "typescript-api-skeleton",
+  "version": "1.0.0",
+  "description": "description",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register src/server.ts",
+    "start": "npm run build && node -r module-alias/register dist/server.js",
+    "debug": "node -r module-alias/register -r ts-node/register --nolazy --inspect dist/server.js",
+    "test": "npm run lint && npm run build && jest --detectOpenHandles --forceExit --coverage --verbose",
+    "build": "tsc",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "lint-fix": "tslint -c tslint.json --fix -p tsconfig.json"
+  },
+  "scripts-info": {
+    "dev": "Start and watch development server using ts compilation on the fly",
+    "start": "Start server",
+    "debug": "Debug code (using ts-node)",
+    "build": "Clean and rebuild the project",
+    "test": "Lint and unit test the project",
+    "lint": "Lint the project source files",
+    "lint-fix": "Lint and fix project source files"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DavidHavl/typescript-api-skeleton"
+  },
+  "keywords": [
+    "api",
+    "Node.js",
+    "typescript"
+  ],
+  "author": "David Havl",
+  "license": "MIT",
+  "dependencies": {
+    "compression": "^1.7.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^3.15.0",
+    "module-alias": "^2.1.0",
+    "morgan": "^1.9.1",
+    "pretty-error": "^2.1.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.2.4"
+  },
+  "devDependencies": {
+    "@types/compression": "^0.0.36",
+    "@types/dotenv": "^6.1.0",
+    "@types/express": "^4.16.1",
+    "@types/helmet": "^0.0.42",
+    "@types/jest": "^23.3.13",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^10.12.18",
+    "@types/supertest": "^2.0.7",
+    "inversify": "^5.0.1",
+    "reflect-metadata": "^0.1.13",
+    "jest": "^24.0.0",
+    "supertest": "^3.4.2",
+    "tsconfig-paths": "^3.7.0",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^8.0.2",
+    "ts-node-dev": "^1.0.0-pre.32",
+    "tsc": "^1.20150623.0",
+    "tslint": "^5.12.1"
+  },
+  "_moduleAliases": {
+    "@": "dist"
+  }
+}
