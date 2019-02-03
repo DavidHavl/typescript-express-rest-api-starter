@@ -40,10 +40,11 @@
     "helmet": "^3.15.0",
     "module-alias": "^2.1.0",
     "morgan": "^1.9.1",
+    "npm": "^6.7.0",
     "pretty-error": "^2.1.1",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.2.4"
+    "typescript": "^3.3.1"
   },
   "devDependencies": {
     "@types/compression": "^0.0.36",
@@ -52,17 +53,17 @@
     "@types/helmet": "^0.0.42",
     "@types/jest": "^23.3.13",
     "@types/morgan": "^1.7.35",
-    "@types/node": "^10.12.18",
+    "@types/node": "^10.12.21",
     "@types/supertest": "^2.0.7",
     "inversify": "^5.0.1",
-    "reflect-metadata": "^0.1.13",
     "jest": "^24.0.0",
+    "reflect-metadata": "^0.1.13",
     "supertest": "^3.4.2",
-    "tsconfig-paths": "^3.7.0",
     "ts-jest": "^23.10.5",
     "ts-node": "^8.0.2",
     "ts-node-dev": "^1.0.0-pre.32",
     "tsc": "^1.20150623.0",
+    "tsconfig-paths": "^3.7.0",
     "tslint": "^5.12.1"
   },
   "_moduleAliases": {
