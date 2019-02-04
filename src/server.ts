@@ -4,7 +4,8 @@ const PORT = process.env.PORT || 3000
 
 const server = app.express.listen(+PORT, (err: Error) => {
   if (err) {
-    return console.log(err) // TODO: do a better logging?
+    app.getLogger().error(err)
+    return
   }
 
   return console.log(`server is listening on port ${PORT}`)
