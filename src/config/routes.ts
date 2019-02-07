@@ -1,6 +1,6 @@
 import { Router, Response, Request, NextFunction } from 'express'
 
-import { itemRoutes } from '@/components/item/config/routes'
+import { itemRoutes } from '@/modules/item/config/routes'
 
 const router = Router()
 

@@ -10,6 +10,7 @@ class LogService implements LogServiceInterface {
   error (message: any): void {
     console.log(message)
   }
+  // TODO: maybe add a hook to log and error methods that will initiate external code (bugpoint or winston,...)
 }
 
 export default LogService

@@ -6,7 +6,7 @@ export default function (err: any, req: Request, res: Response, next: NextFuncti
     // set problem-json header
     res.header('Content-Type', 'application/problem+json; charset=utf-8')
     // set status code
-    res.status(err.error.statusCode || 400) // TODO: 400 if user_id is missing and 422 if user_id is wrong (-43rw43)
+    res.status(err.error.statusCode || 400) // TODO: 400 if user_id is missing and 422 if user_id is wrong (ie. -43rw43)
     // return problem-json formated response. https://tools.ietf.org/html/rfc7807
     res.json({
       status: err.error.statusCode || 400, // status code

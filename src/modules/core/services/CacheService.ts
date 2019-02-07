@@ -1,4 +1,4 @@
-import { Response, Request, NextFunction } from 'redis'
+import { Response, Request, NextFunction } from 'redis' // TODO: do redis
 import CacheServiceInterface from './interfaces/CacheServiceInterface'
 import 'reflect-metadata';
 import { injectable } from 'inversify'
@@ -12,6 +12,9 @@ class CacheService implements CacheServiceInterface {
   }
 
   set (key: String, value: any): void {
+  }
+
+  close (): void {
   }
 }
 

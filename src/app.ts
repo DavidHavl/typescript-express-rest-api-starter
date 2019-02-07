@@ -9,14 +9,18 @@ import prettyError from 'pretty-error'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import { DIContainer, DITypes } from '@/config/di'
-import LogServiceInterface from '@/components/core/services/interfaces/LogServiceInterface'
+import LogServiceInterface from '@/modules/core/services/interfaces/LogServiceInterface'
+import DbServiceInterface from '@/modules/core/services/interfaces/DbServiceInterface'
+import CacheServiceInterface from '@/modules/core/services/interfaces/CacheServiceInterface'
 
 // custom
-import routes from '@/routes'
+import routes from '@/config/routes'
 
 class App {
   public express: express.Express
   private logger: LogServiceInterface
+  private db: DbServiceInterface
+  private cache: CacheServiceInterface
 
   constructor () {
     // Load environment variables from .env file, where API keys and passwords are configured
@@ -38,6 +42,8 @@ class App {
     this.initRoutes()
     // logging
     this.logger = DIContainer.get<LogServiceInterface>(DITypes.LogService)
+    this.db = DIContainer.get<DbServiceInterface>(DITypes.DbService)
+    this.cache = DIContainer.get<CacheServiceInterface>(DITypes.CacheService)
     this.initRequestLogging()
 
     // errors
@@ -112,8 +118,8 @@ class App {
 
   public cleanup (): void {
     const actions: Function[] = [
-      // this.db.destroy, // TODO: it may call different for mongoose or TypeORM
-      // this.redis.quit, // TODO: get cache from DI and call quit on it
+      this.db.close,
+      this.cache.close,
     ]
     actions.forEach((action, i) => {
       try {
