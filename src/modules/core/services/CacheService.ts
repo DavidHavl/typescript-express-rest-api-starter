@@ -1,11 +1,14 @@
-import { Response, Request, NextFunction } from 'redis' // TODO: do redis
+/**
+ * @author     David Havl info@davidhavl.com
+ * @license    MIT
+ */
 import CacheServiceInterface from './interfaces/CacheServiceInterface'
 import 'reflect-metadata';
 import { injectable } from 'inversify'
 
 @injectable()
 class CacheService implements CacheServiceInterface {
-  constructor () { // TODO: DI use constructor variables to do dependency injections
+  constructor () {
   }
 
   get (key: String): any {

@@ -1,3 +1,7 @@
+/**
+ * @author     David Havl info@davidhavl.com
+ * @license    MIT
+ */
 import LogServiceInterface from './interfaces/LogServiceInterface'
 import 'reflect-metadata';
 import { injectable } from 'inversify'

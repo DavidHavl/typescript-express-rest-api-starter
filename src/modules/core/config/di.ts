@@ -1,3 +1,7 @@
+/**
+ * @author     David Havl info@davidhavl.com
+ * @license    MIT
+ */
 import 'reflect-metadata'
 import { interfaces } from 'inversify'
 import Container = interfaces.Container

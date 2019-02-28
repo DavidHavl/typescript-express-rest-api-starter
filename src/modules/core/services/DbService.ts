@@ -1,3 +1,7 @@
+/**
+ * @author     David Havl info@davidhavl.com
+ * @license    MIT
+ */
 import DbServiceInterface from './interfaces/DbServiceInterface'
 import 'reflect-metadata';
 import { injectable } from 'inversify'
