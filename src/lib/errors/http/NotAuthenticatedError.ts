@@ -1,7 +1,7 @@
 import BaseError from './BaseError'
 
-export default class UnauthorizedError extends BaseError {
+export default class NotAuthenticatedError extends BaseError {
   public statusCode = 401
-  public name = 'UnauthorizedError'
+  public name = 'NotAuthenticatedError' // UnauthorizedError
   public message = 'You are not authenticated.  Please authenticate and try again.'
 }
