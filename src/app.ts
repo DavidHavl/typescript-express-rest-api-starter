@@ -36,8 +36,8 @@ class App {
     // rate limiter
     this.initRateLimiter()
     // parsing request
-    this.express.use(bodyParser.json())
-    this.express.use(bodyParser.urlencoded({ extended: true }))
+    this.express.use(bodyParser.json({ limit: '100kb' }))
+    this.express.use(bodyParser.urlencoded({ extended: true, limit: '100kb' }))
     // compression
     this.express.use(compression())
     // let node server files in static folder
