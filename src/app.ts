@@ -8,6 +8,7 @@ import bodyParser from 'body-parser'
 import { config } from 'dotenv'
 import compression from 'compression'  // compresses requests
 import 'express-async-errors'
+import expressRateLimit from 'express-rate-limit'
 import httpErrorHandler from '@/lib/middleware/httpErrorHandler'
 import prettyError from 'pretty-error'
 import helmet from 'helmet'
@@ -32,6 +33,8 @@ class App {
     this.express = express()
     // security headers
     this.express.use(helmet())
+    // rate limiter
+    this.initRateLimiter()
     // parsing request
     this.express.use(bodyParser.json())
     this.express.use(bodyParser.urlencoded({ extended: true }))
@@ -72,6 +75,18 @@ class App {
       }
       next()
     })
+  }
+
+  private initRateLimiter () {
+    this.express.use(new expressRateLimit({
+      // store: MemoryStore
+      windowMs: 60 * 1000, // 1 minute
+      max: 300, // limit each IP to 300 requests per windowMs
+      statusCode: 429,
+      message: 'Too many requests from this IP, please try again later',
+    }))
+    // only apply to requests that begin with /api/
+    // this.express.use("/api/", apiLimiter)
   }
 
   private initRequestLogging(): void {
