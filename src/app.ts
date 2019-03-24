@@ -10,7 +10,7 @@ import compression from 'compression'  // compresses requests
 import 'express-async-errors'
 import expressRateLimit from 'express-rate-limit'
 import httpErrorHandler from '@/lib/middleware/httpErrorHandler'
-import prettyError from 'pretty-error'
+import PrettyError from 'pretty-error'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import { DIContainer, DITypes } from '@/config/di'
@@ -86,10 +86,6 @@ class App {
     this.express.use('/', routes)
   }
 
-  private initStaticFiles(): void {
-    this.express.use(express.static('static'))
-  }
-
   private initCors(): void {
     // set CORS headers
     this.express.use((req: Request, res: Response, next: NextFunction) => {
@@ -123,7 +119,7 @@ class App {
   }
 
   public initErrorHandling(): void {
-    const pe = new prettyError()
+    const pe = new PrettyError()
     pe.skipNodeFiles()
     pe.skipPackage('express')
     pe.skipPackage('express-async-errors')
@@ -131,7 +127,7 @@ class App {
     // errors returned as validation or that should be send back to user.
     this.express.use(httpErrorHandler)
     // intercepting async errors and sending them to next(err) so it turns up here is done via express-async-errors
-    this.express.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    this.express.use((err: any, req: Request, res: Response) => {
       // log
       if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
         console.error(pe.render(err))
@@ -143,7 +139,7 @@ class App {
       res.header('Content-Type', 'application/problem+json; charset=utf-8')
       // set status code
       res.status(err.statusCode || 500)
-      // return problem-json formated response. https://tools.ietf.org/html/rfc7807
+      // return problem-json formatted response. https://tools.ietf.org/html/rfc7807
       res.send({
         status: err.statusCode || 500, // status code
         detail: err.message || 'Oops something went wrong!', // readable by users
