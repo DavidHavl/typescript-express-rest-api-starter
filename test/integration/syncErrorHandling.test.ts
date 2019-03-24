@@ -1,10 +1,14 @@
 import supertest from 'supertest'
-import app from '../../src/app'
+import App from '../../src/app'
 import { NextFunction, Request, Response } from 'express'
 import BaseError from '../../src/lib/errors/http/BaseError'
 import ValidationError from '../../src/lib/errors/http/ValidationError'
 
 describe('GET /', () => {
+  let app:App
+  beforeAll (() => {
+    app = new App()
+  })
   test('return 500 on sync error', async () => {
     const routeUrl = '/error/500'
     const message = 'This is a 500 error'

@@ -1,7 +1,12 @@
 import supertest from 'supertest'
-import app from '../../src/app'
+import App from '../../src/app'
 
 describe('GET /', () => {
+  let app:App
+  beforeAll (() => {
+    app = new App()
+  })
+
   test('return 200 OK', () => {
     return supertest(app.getExpress()).get('/').expect(200)
     // or JEST way
