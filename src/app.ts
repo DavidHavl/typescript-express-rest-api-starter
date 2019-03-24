@@ -17,14 +17,16 @@ import { DIContainer, DITypes } from '@/config/di'
 import LogServiceInterface from '@/modules/core/services/interfaces/LogServiceInterface'
 import DbServiceInterface from '@/modules/core/services/interfaces/DbServiceInterface'
 import CacheServiceInterface from '@/modules/core/services/interfaces/CacheServiceInterface'
-
+import * as http from 'http'
 // custom
 import routes from '@/config/routes'
+
 class App {
-  public express: express.Express
+  public express: express.Application
+  private server!: http.Server
   private logger: LogServiceInterface
-  private db: DbServiceInterface
-  private cache: CacheServiceInterface
+  private db!: DbServiceInterface
+  private cache!: CacheServiceInterface
 
   constructor() {
     // Load environment variables from .env file, where API keys and passwords are configured
@@ -46,13 +48,38 @@ class App {
     this.initCors()
     // logging
     this.logger = DIContainer.get<LogServiceInterface>(DITypes.LogService)
-    this.db = DIContainer.get<DbServiceInterface>(DITypes.DbService)
-    this.cache = DIContainer.get<CacheServiceInterface>(DITypes.CacheService)
     this.initRequestLogging()
     // routes
     this.initRoutes()
     // errors
     this.initErrorHandling()
+  }
+
+  public async start (port: number) {
+    // do async work before calling listen
+    await this.initDatabase()
+    await this.initCache()
+    this.server = this.express.listen(port, (err: Error) => {
+      if (err) {
+        this.getLogger().error(err)
+        return
+      }
+
+      return console.log(`server is listening on port ${port}`)
+    })
+  }
+
+  public stop () {
+    this.server.close()
+    this.cleanup()
+  }
+
+  async initDatabase () {
+    this.db = DIContainer.get<DbServiceInterface>(DITypes.DbService)
+  }
+
+  initCache () {
+    this.cache = DIContainer.get<CacheServiceInterface>(DITypes.CacheService)
   }
 
   private initRoutes(): void {
@@ -155,4 +182,4 @@ class App {
     })
   }
 }
-export default new App()
+export default App
