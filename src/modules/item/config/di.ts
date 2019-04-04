@@ -6,7 +6,7 @@ import { interfaces } from 'inversify'
 import Container = interfaces.Container
 
 const itemDITypes = {
-  // LogServiceInterface: Symbol('LogServiceInterface'),
+  // 'Item.Service.ItemService': Symbol('Item.Service.ItemService'),
 }
 
 const itemDIBinder = (container: Container) => {
