@@ -4,16 +4,17 @@
  */
 import 'reflect-metadata';
 import { injectable } from 'inversify'
+import Item from '@/modules/item/entities/Item'
+import ItemServiceInterface from '@/modules/item/services/interfaces/ItemServiceInterface'
 
 @injectable()
-class ItemService {
-  // TODO: DI use constructor variables to do dependency injections
+export default class ItemService implements ItemServiceInterface{
   constructor () {
   }
-  getItems (where: object): object[] | [] {
-    return []
+  getItems (where: object): Item[] {
+    return [new Item({}), new Item({})]
   }
-  getItemById (id: number): object | null {
-    return {}
+  getItemById (id: number): Item | null {
+    return new Item({})
   }
 }
