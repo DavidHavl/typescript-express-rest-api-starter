@@ -1,5 +1,5 @@
 import ValidationError from '@/lib/errors/http/ValidationError'
-import PlainObjectArray from 'PlainObjectArray'
+import ObjectLiteralArray from 'ObjectLiteralArray'
 
 describe('Base Input Validator', () => {
   const defaults = {
@@ -24,7 +24,7 @@ describe('Base Input Validator', () => {
     expect(instance.message).toBe(val)
   })
   test('constructor object message assignment', () => {
-    const val: PlainObjectArray = [{ foo: 'bar' }]
+    const val: ObjectLiteralArray = [{ foo: 'bar' }]
     const instance = new ValidationError(val)
     expect(instance.message).not.toBe(val)
     expect(instance.details).not.toBe(val)

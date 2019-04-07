@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
-import PlainObject from 'PlainObject'
+import ObjectLiteral from 'ObjectLiteral'
 import BaseError from '@/lib/errors/http/BaseError'
 import ValidationError from '@/lib/errors/http/ValidationError'
-import isPlainObject from 'is-plain-object'
-import isPlainObjectArray from '@/lib/utils/isPlainObjectArray'
+import isObjectLiteral from 'is-plain-object'
+import isObjectLiteralArray from '@/lib/utils/isObjectLiteralArray'
 
 export default function (err: any, req: Request, res: Response, next: NextFunction): void {
   if (err instanceof BaseError) {
@@ -12,7 +12,7 @@ export default function (err: any, req: Request, res: Response, next: NextFuncti
     // set status code
     res.status(err.statusCode || 400)
     // return problem-json formated response. https://tools.ietf.org/html/rfc7807
-    const error: PlainObject = {
+    const error: ObjectLiteral = {
       status: err.statusCode || 400, // status code
       title: err.name || 'Error', // short, readable by engineers,
       detail: err.message || 'Oops something went wrong!', // A human-readable description of the specific error.
@@ -22,10 +22,10 @@ export default function (err: any, req: Request, res: Response, next: NextFuncti
     }
     // if error is Joi (input validation error)
     if (err instanceof ValidationError) {
-      if (err.validation && isPlainObjectArray(err.validation)) {
+      if (err.validation && isObjectLiteralArray(err.validation)) {
         Object.defineProperty(error, 'validation', { value: [], enumerable: true })
         err.validation.forEach((item) => {
-          if (isPlainObject(item)) {
+          if (isObjectLiteral(item)) {
             if (item.path && Array.isArray(item.path) && item.type) {
               const obj: object = {
                 [item.path.join('.')] : item.type,

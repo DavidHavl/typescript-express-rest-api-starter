@@ -2,6 +2,8 @@
  * @author     David Havl info@davidhavl.com
  * @license    MIT
  */
-export default interface EntityInterface {
+import ObjectLiteral from 'ObjectLiteral'
+
+export default interface EntityInterface extends ObjectLiteral {
   id: string,
 }
