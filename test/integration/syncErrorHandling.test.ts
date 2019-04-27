@@ -6,7 +6,7 @@ import ValidationError from '../../src/lib/errors/http/ValidationError'
 
 describe('GET /', () => {
   let app:App
-  beforeAll (() => {
+  beforeAll(() => {
     app = new App()
   })
   test('return 500 on sync error', async () => {

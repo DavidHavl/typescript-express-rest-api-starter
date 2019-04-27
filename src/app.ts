@@ -14,9 +14,9 @@ import PrettyError from 'pretty-error'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import { DIContainer, DITypes } from '@/config/di'
-import LogServiceInterface from '@/modules/core/services/interfaces/LogServiceInterface'
-import DbServiceInterface from '@/modules/core/services/interfaces/DbServiceInterface'
-import CacheServiceInterface from '@/modules/core/services/interfaces/CacheServiceInterface'
+import LogServiceInterface from '@/lib/interfaces/services/LogServiceInterface'
+import DbServiceInterface from '@/lib/interfaces/services/DbServiceInterface'
+import CacheServiceInterface from '@/lib/interfaces/services/CacheServiceInterface'
 import * as http from 'http'
 // custom
 import routes from '@/config/routes'
@@ -127,7 +127,7 @@ class App {
     // errors returned as validation or that should be send back to user.
     this.express.use(httpErrorHandler)
     // intercepting async errors and sending them to next(err) so it turns up here is done via express-async-errors
-    this.express.use((err: any, req: Request, res: Response) => {
+    this.express.use((err: any, req: Request, res: Response, next: NextFunction) => {
       // log
       if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
         console.error(pe.render(err))

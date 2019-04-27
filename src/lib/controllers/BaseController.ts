@@ -3,7 +3,7 @@
  * @license    MIT
  */
 import { Response, Request, NextFunction } from 'express'
-import RestApiControllerInterface from '@/modules/core/controllers/interfaces/RestApiControllerInterface'
+import RestApiControllerInterface from '@/lib/interfaces/controllers/RestApiControllerInterface'
 
 export default class BaseController implements RestApiControllerInterface {
   constructor () {

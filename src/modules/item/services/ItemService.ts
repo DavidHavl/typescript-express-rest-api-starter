@@ -11,7 +11,7 @@ import ItemServiceInterface from '@/modules/item/services/interfaces/ItemService
 export default class ItemService implements ItemServiceInterface{
   constructor () {
   }
-  getItems (where: object): Item[] {
+  getItems (where: object): Item[] | [] {
     return [new Item({}), new Item({})]
   }
   getItemById (id: number): Item | null {

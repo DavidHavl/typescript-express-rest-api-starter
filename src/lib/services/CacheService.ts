@@ -2,7 +2,7 @@
  * @author     David Havl info@davidhavl.com
  * @license    MIT
  */
-import CacheServiceInterface from './interfaces/CacheServiceInterface'
+import CacheServiceInterface from '@/lib/interfaces/services/CacheServiceInterface'
 import 'reflect-metadata';
 import { injectable } from 'inversify'
 

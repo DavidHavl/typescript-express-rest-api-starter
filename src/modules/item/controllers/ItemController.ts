@@ -3,7 +3,7 @@
  * @license    MIT
  */
 import { Response, Request, NextFunction } from 'express'
-import RestApiControllerInterface from '@/modules/core/controllers/interfaces/RestApiControllerInterface'
+import RestApiControllerInterface from '@/lib/interfaces/controllers/RestApiControllerInterface'
 import ItemInputValidator from '@/modules/item/input-validators/ItemInputValidator'
 import ValidationError from '@/lib/errors/http/ValidationError'
 import NotFoundError from '@/lib/errors/http/NotFoundError'

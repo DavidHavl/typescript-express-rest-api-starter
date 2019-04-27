@@ -2,7 +2,7 @@
  * @author     David Havl info@davidhavl.com
  * @license    MIT
  */
-import InputValidatorInterface from './interfaces/InputValidatorInterface'
+import InputValidatorInterface from '@/lib/interfaces/input-validators/InputValidatorInterface'
 
 import joi, { SchemaLike, ValidationError as JoiValidationError, ValidationErrorItem } from 'joi'
 
