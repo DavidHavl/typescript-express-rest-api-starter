@@ -4,7 +4,7 @@
  */
 import { Response, Request, NextFunction } from 'express'
 
-export default interface RestApiControllerInterface {
+interface RestApiControllerInterface {
   indexAction (req: Request, res: Response, next: NextFunction): void  // get list of all items by filter.
 
   getAction (req: Request, res: Response, next: NextFunction): void    // get item by id
@@ -15,3 +15,5 @@ export default interface RestApiControllerInterface {
 
   deleteAction (req: Request, res: Response, next: NextFunction): void // delete item by id
 }
+
+export default RestApiControllerInterface

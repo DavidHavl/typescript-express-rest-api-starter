@@ -1,4 +1,4 @@
-export default class BaseError extends Error {
+class BaseError extends Error {
   public statusCode: number = 400
   public name: string = 'Api Error'
   public message: string = ''
@@ -21,3 +21,5 @@ export default class BaseError extends Error {
     }
   }
 }
+
+export default BaseError

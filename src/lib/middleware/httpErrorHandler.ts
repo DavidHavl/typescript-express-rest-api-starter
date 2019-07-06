@@ -5,7 +5,7 @@ import ValidationError from '@/lib/errors/http/ValidationError'
 import isObjectLiteral from 'is-plain-object'
 import isObjectLiteralArray from '@/lib/utils/isObjectLiteralArray'
 
-export default function (err: any, req: Request, res: Response, next: NextFunction): void {
+const httpErrorHandler = function (err: any, req: Request, res: Response, next: NextFunction): void {
   if (err instanceof BaseError) {
     // set problem-json header
     res.header('Content-Type', 'application/problem+json; charset=utf-8')
@@ -45,3 +45,5 @@ export default function (err: any, req: Request, res: Response, next: NextFuncti
     next(err)
   }
 }
+
+export default httpErrorHandler

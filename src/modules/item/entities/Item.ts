@@ -5,7 +5,7 @@
 import EntityInterface from '@/lib/interfaces/entities/EntityInterface'
 
 // @Entity()
-export default class Item implements EntityInterface {
+class Item implements EntityInterface {
   constructor (data?: object) {
     if (data) {
       Object.assign(this, data)
@@ -25,3 +25,5 @@ export default class Item implements EntityInterface {
   updatedAt!: Date
 
 }
+
+export default Item

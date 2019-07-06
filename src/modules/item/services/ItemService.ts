@@ -8,7 +8,7 @@ import Item from '@/modules/item/entities/Item'
 import ItemServiceInterface from '@/modules/item/services/interfaces/ItemServiceInterface'
 
 @injectable()
-export default class ItemService implements ItemServiceInterface{
+class ItemService implements ItemServiceInterface{
   constructor () {
   }
   getItems (where: object): Item[] | [] {
@@ -18,3 +18,5 @@ export default class ItemService implements ItemServiceInterface{
     return new Item({})
   }
 }
+
+export default ItemService

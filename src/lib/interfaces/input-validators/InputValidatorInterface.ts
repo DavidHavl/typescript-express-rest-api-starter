@@ -4,10 +4,12 @@
  */
 import { SchemaLike, ValidationErrorItem } from 'joi'
 
-export default interface InputValidatorInterface {
+interface InputValidatorInterface {
   schema: SchemaLike
   setData (data: object): this
   isValid (data?: object): boolean
   getCleanData (): object | null
   getErrors (): ValidationErrorItem[] | null
 }
+
+export default InputValidatorInterface

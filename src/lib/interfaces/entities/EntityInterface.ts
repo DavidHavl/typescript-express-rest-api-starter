@@ -4,6 +4,8 @@
  */
 import ObjectLiteral from 'ObjectLiteral'
 
-export default interface EntityInterface extends ObjectLiteral {
+interface EntityInterface extends ObjectLiteral {
   id: string,
 }
+
+export default EntityInterface

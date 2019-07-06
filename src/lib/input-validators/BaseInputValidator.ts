@@ -6,7 +6,7 @@ import InputValidatorInterface from '@/lib/interfaces/input-validators/InputVali
 
 import joi, { SchemaLike, ValidationError as JoiValidationError, ValidationErrorItem } from 'joi'
 
-export default class BaseInputValidator implements InputValidatorInterface {
+class BaseInputValidator implements InputValidatorInterface {
   private stripUnknownFields: boolean = true
   private data: object | null = null
   private cleanData: object | null = null
@@ -47,3 +47,5 @@ export default class BaseInputValidator implements InputValidatorInterface {
     return this.errorObject ? this.errorObject.details : null
   }
 }
+
+export default BaseInputValidator

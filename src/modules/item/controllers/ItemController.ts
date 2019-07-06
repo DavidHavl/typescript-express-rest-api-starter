@@ -8,7 +8,7 @@ import ItemInputValidator from '@/modules/item/input-validators/ItemInputValidat
 import ValidationError from '@/lib/errors/http/ValidationError'
 import NotFoundError from '@/lib/errors/http/NotFoundError'
 
-export default class ItemController implements RestApiControllerInterface {
+class ItemController implements RestApiControllerInterface {
   constructor () {}
 
   indexAction (req: Request, res: Response, next: NextFunction) {
@@ -26,3 +26,5 @@ export default class ItemController implements RestApiControllerInterface {
   deleteAction (req: Request, res: Response, next: NextFunction) {
   }
 }
+
+export default ItemController

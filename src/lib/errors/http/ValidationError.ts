@@ -3,7 +3,7 @@ import BaseError from './BaseError'
 import isObjectLiteralArray from '@/lib/utils/isObjectLiteralArray'
 import ObjectLiteralArray from 'ObjectLiteralArray'
 
-export default class ValidationError extends BaseError {
+class ValidationError extends BaseError {
   public statusCode: number = 400
   public name: string = 'ValidationError'
   public message: string = 'The request data is not valid'
@@ -28,3 +28,5 @@ export default class ValidationError extends BaseError {
     }
   }
 }
+
+export default ValidationError

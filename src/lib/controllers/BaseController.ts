@@ -5,7 +5,7 @@
 import { Response, Request, NextFunction } from 'express'
 import RestApiControllerInterface from '@/lib/interfaces/controllers/RestApiControllerInterface'
 
-export default class BaseController implements RestApiControllerInterface {
+class BaseController implements RestApiControllerInterface {
   constructor () {
 
   }
@@ -29,3 +29,5 @@ export default class BaseController implements RestApiControllerInterface {
     res.status(501).send('Not Implemented')
   }
 }
+
+export default BaseController
