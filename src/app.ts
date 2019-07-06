@@ -55,18 +55,10 @@ class App {
     this.initErrorHandling()
   }
 
-  public async start (port: number) {
+  public async setup () {
     // do async work before calling listen
     await this.initDatabase()
     await this.initCache()
-    this.server = this.express.listen(port, (err: Error) => {
-      if (err) {
-        this.getLogger().error(err)
-        return
-      }
-
-      return console.log(`server is listening on port ${port}`)
-    })
   }
 
   public stop () {

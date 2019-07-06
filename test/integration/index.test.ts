@@ -3,7 +3,7 @@ import App from '../../src/app'
 
 describe('GET /', () => {
   let app:App
-  beforeAll (() => {
+  beforeAll(() => {
     app = new App()
   })
 

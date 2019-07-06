@@ -7,7 +7,17 @@ import App from './app'
 const PORT = process.env.PORT || 3000
 
 const app = new App()
-app.start(+PORT)
+
+// do async setup and start listening
+app.setup().then(() => {
+  app.getExpress().listen(+PORT, (err: Error) => {
+    if (err) {
+      app.getLogger().error(err)
+      return
+    }
+    return console.log(`server is listening on port ${+PORT}`)
+  })
+})
 
 // for unhandled rejections
 process.on('unhandledRejection', (ex, promise) => {
