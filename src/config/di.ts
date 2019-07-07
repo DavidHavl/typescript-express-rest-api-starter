@@ -1,10 +1,6 @@
-import 'reflect-metadata'
-import { Container } from 'inversify'
-import LogServiceInterface from '@/lib/interfaces/services/LogServiceInterface'
+import { createContainer, AwilixContainer, asClass } from 'awilix'
 import LogService from '@/lib/services/LogService'
-import CacheServiceInterface from '@/lib/interfaces/services/CacheServiceInterface'
 import CacheService from '@/lib/services/CacheService'
-import DbServiceInterface from '@/lib/interfaces/services/DbServiceInterface'
 import DbService from '@/lib/services/DbService'
 // modules
 import { itemDIBinder, ItemDITypes } from '@/modules/item/config/di'
@@ -16,12 +12,6 @@ const coreDITypes = {
   DbService: Symbol.for('DbService'),
 }
 
-const coreDIBinder = (container: Container) => {
-  container.bind<LogServiceInterface>(coreDITypes.LogService).to(LogService).inSingletonScope()
-  container.bind<CacheServiceInterface>(coreDITypes.CacheService).to(CacheService).inSingletonScope()
-  container.bind<DbServiceInterface>(coreDITypes.DbService).to(DbService).inSingletonScope()
-}
-
 // glue all dependencies
 
 const types = {
@@ -29,8 +19,20 @@ const types = {
   ...ItemDITypes,
 }
 
-const container = new Container()
-coreDIBinder(container)
-itemDIBinder(container)
+const container = createContainer({
+  injectionMode: 'CLASSIC',
+})
 
-export { container as DIContainer, types as DITypes }
+const binder = async (container: AwilixContainer) => {
+  // CORE
+  container.register(coreDITypes.LogService, asClass(LogService).singleton())
+  container.register(coreDITypes.CacheService, asClass(CacheService).singleton())
+  container.register(coreDITypes.DbService, asClass(DbService).singleton())
+
+  // MODULES //
+  // this should be sorted by dependency hierarchy (so that dependency is bound before it's used in the next code)
+  await itemDIBinder(container)
+}
+
+export { container as DIContainer, types as DITypes, binder as DIBinder }
+

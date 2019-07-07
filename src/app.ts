@@ -13,20 +13,16 @@ import httpErrorHandler from '@/lib/middleware/httpErrorHandler'
 import PrettyError from 'pretty-error'
 import helmet from 'helmet'
 import morgan from 'morgan'
-import { DIContainer, DITypes } from '@/config/di'
+import { DIContainer, DITypes, DIBinder } from '@/config/di'
 import LogServiceInterface from '@/lib/interfaces/services/LogServiceInterface'
 import DbServiceInterface from '@/lib/interfaces/services/DbServiceInterface'
 import CacheServiceInterface from '@/lib/interfaces/services/CacheServiceInterface'
-import * as http from 'http'
+
 // custom
 import routes from '@/config/routes'
 
 class App {
   public express: express.Application
-  private server!: http.Server
-  private logger: LogServiceInterface
-  private db!: DbServiceInterface
-  private cache!: CacheServiceInterface
 
   constructor() {
     // Load environment variables from .env file, where API keys and passwords are configured
@@ -47,7 +43,6 @@ class App {
     //
     this.initCors()
     // logging
-    this.logger = DIContainer.get<LogServiceInterface>(DITypes.LogService)
     this.initRequestLogging()
     // routes
     this.initRoutes()
@@ -55,23 +50,24 @@ class App {
     this.initErrorHandling()
   }
 
+  /**
+   * setup the app and perform async operations so everything is ready for the server to start listening
+   */
   public async setup () {
     // do async work before calling listen
-    await this.initDatabase()
-    await this.initCache()
+    await this.initDI()
   }
 
-  public stop () {
-    this.server.close()
-    this.cleanup()
+  async initDI () {
+    await DIBinder(DIContainer)
   }
 
-  async initDatabase () {
-    this.db = DIContainer.get<DbServiceInterface>(DITypes.DbService)
+  getDatabase (): DbServiceInterface {
+    return DIContainer.resolve<DbServiceInterface>(DITypes.DbService)
   }
 
-  initCache () {
-    this.cache = DIContainer.get<CacheServiceInterface>(DITypes.CacheService)
+  getCache (): CacheServiceInterface {
+    return DIContainer.resolve<CacheServiceInterface>(DITypes.CacheService)
   }
 
   private initRoutes(): void {
@@ -149,8 +145,8 @@ class App {
     })
   }
 
-  public getLogger() {
-    return this.logger
+  public getLogger(): LogServiceInterface {
+    return DIContainer.resolve<LogServiceInterface>(DITypes.LogService)
   }
 
   public getExpress() {
@@ -159,8 +155,8 @@ class App {
 
   public cleanup(): void {
     const actions: Function[] = [
-      this.db.close,
-      this.cache.close,
+      this.getDatabase().close,
+      this.getCache().close,
     ]
     actions.forEach((action, i) => {
       try {

@@ -3,8 +3,9 @@ import App from '../../src/app'
 
 describe('GET /', () => {
   let app:App
-  beforeAll(() => {
+  beforeAll(async () => {
     app = new App()
+    app.setup()
   })
 
   test('return 200 OK', () => {

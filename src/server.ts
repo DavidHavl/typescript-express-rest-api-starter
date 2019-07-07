@@ -3,14 +3,16 @@
  * @license    MIT
  */
 import App from './app'
+import { Server } from 'http'
 
 const PORT = process.env.PORT || 3000
 
 const app = new App()
+let server: Server
 
 // do async setup and start listening
 app.setup().then(() => {
-  app.getExpress().listen(+PORT, (err: Error) => {
+  server = app.getExpress().listen(+PORT, (err: Error) => {
     if (err) {
       app.getLogger().error(err)
       return
@@ -32,7 +34,8 @@ process.on('uncaughtException', (err) => {
 
 // other process events
 process.on('exit', () => {
-  app.stop()
+  server.close()
+  app.cleanup()
 })
 process.on('SIGINT', () => {
   process.exit(1)

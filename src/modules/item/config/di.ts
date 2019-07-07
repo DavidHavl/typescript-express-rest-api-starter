@@ -2,17 +2,21 @@
  * @author     David Havl info@davidhavl.com
  * @license    MIT
  */
-import { interfaces } from 'inversify'
-import Container = interfaces.Container
-import ItemServiceInterface from '@/modules/item/services/interfaces/ItemServiceInterface'
+import { AwilixContainer, asClass } from 'awilix'
 import ItemService from '@/modules/item/services/ItemService'
 
-const itemDITypes = {
+const diTypes = {
   'Item.Service.ItemService': Symbol('Item.Service.ItemService'),
 }
 
-const itemDIBinder = (container: Container) => {
-  container.bind<ItemServiceInterface>(itemDITypes['Item.Service.ItemService']).to(ItemService).inSingletonScope()
+const itemDIBinder = (container: AwilixContainer) => {
+  // services
+  container.register(diTypes['Item.Service.ItemService'], asClass(ItemService).inject((container) => {
+    return [
+      // array of dependencies to inject here
+      // container.resolve(diTypes['Item.Repository.ItemRepository']),
+    ]
+  }).singleton())
 }
 
-export { itemDIBinder, itemDITypes as ItemDITypes }
+export { itemDIBinder, diTypes as ItemDITypes }
