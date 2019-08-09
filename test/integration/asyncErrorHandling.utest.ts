@@ -6,51 +6,60 @@ import ValidationError from '../../src/lib/errors/http/ValidationError'
 
 describe('GET /', () => {
   let app:App
-  beforeAll(() => {
+  const routeConfig = {
+    500: {
+      url: '/error/500',
+      message: 'This is a 500 error',
+    },
+    400: {
+      url: '/error/400',
+      message: 'This is a http 400 error',
+    },
+    '400v': {
+      url: '/error/400validation',
+      message: 'This is a http validation 400 error',
+    },
+  }
+  beforeAll(async () => {
     app = new App()
-  })
-  test('return 500 on async error', async () => {
-    const routeUrl = '/error/500'
-    const message = 'This is a 500 error'
-    app.getExpress().get(routeUrl, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-      await new Promise(() => {
-        throw new Error(message)
+
+    app.getExpress().get(routeConfig[500].url, (): Promise<void> => {
+      return new Promise(() => {
+        throw new Error(routeConfig[500].message)
       })
     })
-    app.initErrorHandling()
-    const response = await supertest(app.getExpress()).get(routeUrl);
+
+    app.getExpress().get(routeConfig[400].url, (): Promise<void> => {
+      return new Promise(() => {
+        throw new BaseError(routeConfig[400].message)
+      })
+    })
+
+    app.getExpress().get(routeConfig['400v'].url, (): Promise<void> => {
+      return new Promise(() => {
+        throw new ValidationError(routeConfig['400v'].message)
+      })
+    })
+    await app.setup()
+  })
+  test('return 500 on async error', async () => {
+    const response = await supertest(app.getExpress()).get(routeConfig[500].url);
     expect(response.status).toEqual(500);
     expect(response.type).toEqual('application/problem+json');
-    expect(response.body.detail).toEqual(message);
+    expect(response.body.detail).toEqual(routeConfig[500].message);
   })
-  // test('return 400 http code on async error', async () => {
-  //   const routeUrl = '/error/400'
-  //   const message = 'This is a http 400 error'
-  //   app.getExpress().get(routeUrl, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  //     await new Promise(() => {
-  //       throw new BaseError(message)
-  //     })
-  //   })
-  //   app.initErrorHandling()
-  //   const response = await supertest(app.getExpress()).get(routeUrl);
-  //   expect(response.status).toEqual(400);
-  //   expect(response.type).toEqual('application/problem+json');
-  //   expect(response.body.detail).toEqual(message);
-  // })
-  //
-  // test('return 400 http code on async validation error', async () => {
-  //   const routeUrl = '/error/400validation'
-  //   const message = 'This is a http validation 400 error'
-  //   app.getExpress().get(routeUrl, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  //     await new Promise(() => {
-  //       throw new ValidationError(message)
-  //     })
-  //   })
-  //   app.initErrorHandling()
-  //   const response = await supertest(app.getExpress()).get(routeUrl);
-  //   expect(response.status).toEqual(400);
-  //   expect(response.type).toEqual('application/problem+json');
-  //   expect(response.body.title).toEqual(new ValidationError().name);
-  //   expect(response.body.detail).toEqual(message);
-  // })
+  test('return 400 http code on async error', async () => {
+    const response = await supertest(app.getExpress()).get(routeConfig[400].url);
+    expect(response.status).toEqual(400);
+    expect(response.type).toEqual('application/problem+json');
+    expect(response.body.detail).toEqual(routeConfig[400].message);
+  })
+
+  test('return 400 http code on async validation error', async () => {
+    const response = await supertest(app.getExpress()).get(routeConfig['400v'].url);
+    expect(response.status).toEqual(400);
+    expect(response.type).toEqual('application/problem+json');
+    expect(response.body.title).toEqual(new ValidationError().name);
+    expect(response.body.detail).toEqual(routeConfig['400v'].message);
+  })
 })

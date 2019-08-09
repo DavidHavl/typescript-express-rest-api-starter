@@ -5,10 +5,13 @@ describe('GET /', () => {
   let app:App
   beforeAll(async () => {
     app = new App()
-    app.setup()
+    debugger
+    await app.setup()
+    debugger
   })
 
   test('return 200 OK', () => {
+    debugger
     return supertest(app.getExpress()).get('/').expect(200)
     // or JEST way
     // const response = await supertest(app.express).get('/');
