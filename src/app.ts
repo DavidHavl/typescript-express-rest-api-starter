@@ -3,9 +3,9 @@
  * @license    MIT
  */
 /* tslint:disable:semicolon */
+import 'dotenv/config'
 import express, { Response, Request, NextFunction } from 'express'
 import bodyParser from 'body-parser'
-import { config } from 'dotenv'
 import compression from 'compression'  // compresses requests
 import 'express-async-errors'
 import { RateLimiterMemory } from 'rate-limiter-flexible'
@@ -27,8 +27,6 @@ class App {
   public express: express.Application
 
   constructor() {
-    // Load environment variables from .env file, where API keys and passwords are configured
-    config({ path: '.env' })
     // set express
     this.express = express()
     // security headers
