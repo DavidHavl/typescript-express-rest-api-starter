@@ -46,10 +46,6 @@ class App {
     this.initCors()
     // logging
     this.initRequestLogging()
-    // routes
-    this.initRoutes()
-    // errors
-    this.initErrorHandling()
   }
 
   /**
@@ -77,10 +73,6 @@ class App {
 
   getCache (): CacheServiceInterface {
     return DIContainer.resolve<CacheServiceInterface>(DITypes.CacheService)
-  }
-
-  private initRoutes(): void {
-    this.express.use('/', routes)
   }
 
   private initCors(): void {

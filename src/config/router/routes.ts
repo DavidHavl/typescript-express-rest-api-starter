@@ -7,7 +7,7 @@ function routes(): Router {
   const version = process.env.API_VERSION || 'v1'
 
   router.get('/', (req: Request, res: Response): void => {
-    res.status(200).send('OK')
+    res.status(200).json({ data: 'OK' })
   })
 
   router.use(`/${version}`, itemRoutes())

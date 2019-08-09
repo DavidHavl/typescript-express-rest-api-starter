@@ -35,12 +35,14 @@ describe('GET /', () => {
     })
     await app.setup()
   })
+
   test('return 500 on sync error', async () => {
     const response = await supertest(app.getExpress()).get(routeConfig[500].url);
     expect(response.status).toEqual(500);
     expect(response.type).toEqual('application/problem+json');
     expect(response.body.detail).toEqual(routeConfig[500].message);
   })
+
   test('return 400 http code on sync error', async () => {
     const response = await supertest(app.getExpress()).get(routeConfig[400].url);
     expect(response.status).toEqual(400);
