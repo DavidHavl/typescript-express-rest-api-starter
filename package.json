@@ -7,7 +7,9 @@
     "dev": "ts-node-dev $NODE_DEBUG_OPTION -r tsconfig-paths/register src/server.ts",
     "start": "npm run build && node -r module-alias/register dist/server.js",
     "debug": "node -r module-alias/register -r ts-node/register --nolazy --inspect dist/server.js",
-    "test": "npm run lint && npm run build && jest $NODE_DEBUG_OPTION --detectOpenHandles --forceExit --coverage --verbose",
+    "test": "npm run lint && npm run build && jest $NODE_DEBUG_OPTION --detectOpenHandles --forceExit --verbose",
+    "test:debug": "npm run lint && npm run build && node --inspect node_modules/.bin/jest $NODE_DEBUG_OPTION --detectOpenHandles --forceExit --verbose",
+    "test:coverage": "npm run lint && npm run build && jest $NODE_DEBUG_OPTION --detectOpenHandles --coverage --forceExit --verbose",
     "build": "tsc",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint-fix": "tslint -c tslint.json --fix -p tsconfig.json"
@@ -18,6 +20,8 @@
     "debug": "Debug code (using ts-node)",
     "build": "Clean and rebuild the project",
     "test": "Lint and unit test the project",
+    "test:debug": "Run the project tests while able to debug it using debugger; statements",
+    "test:coverage": "Run the project tests and show coverage on the end",
     "lint": "Lint the project source files",
     "lint-fix": "Lint and fix project source files"
   },
@@ -56,6 +60,7 @@
     "@types/escape-html": "^0.0.20",
     "@types/express": "^4.17.0",
     "@types/express-rate-limit": "^3.3.0",
+    "@types/glob": "^7.1.1",
     "@types/helmet": "^0.0.43",
     "@types/jest": "^24.0.15",
     "@types/jest-diff": "^20.0.1",

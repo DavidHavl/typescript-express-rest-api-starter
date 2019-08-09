@@ -9,7 +9,9 @@ import ValidationError from '@/lib/errors/http/ValidationError'
 import NotFoundError from '@/lib/errors/http/NotFoundError'
 
 class ItemController implements RestApiControllerInterface {
-  constructor () {}
+  constructor () {
+    debugger
+  }
 
   indexAction (req: Request, res: Response, next: NextFunction) {
   }

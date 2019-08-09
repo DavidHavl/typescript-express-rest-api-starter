@@ -20,6 +20,7 @@ describe('Base Input Validator', () => {
     expect(instance['data']).toBe(null)
     instance.setData(data)
     expect(instance['data']).toEqual(data)
+    debugger
   })
 
   test('sets data via constructor', () => {

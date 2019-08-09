@@ -3,14 +3,17 @@
  * @license    MIT
  */
 import { Router } from 'express'
-import ItemController from '@/modules/item/controllers/ItemController'
+import { DIContainer, DITypes } from '@/config/di'
+import RestApiControllerInterface from '@/lib/interfaces/controllers/RestApiControllerInterface'
 
-const itemRoutes = Router()
-const itemController = new ItemController()
-itemRoutes.get('/items', itemController.indexAction)
-itemRoutes.get('/items/:id(\d+)', itemController.getAction)
-itemRoutes.post('/items', itemController.postAction)
-itemRoutes.patch('/items/:id(\d+)', itemController.patchAction)
-itemRoutes.delete('/items/:id(\d+)', itemController.deleteAction)
-
+function itemRoutes() : Router {
+  const router = Router()
+  const itemController = DIContainer.resolve<RestApiControllerInterface>(DITypes['Item.Controller.ItemController'])
+  router.get('/items', itemController.indexAction)
+  router.get('/items/:id(\d+)', itemController.getAction)
+  router.post('/items', itemController.postAction)
+  router.patch('/items/:id(\d+)', itemController.patchAction)
+  router.delete('/items/:id(\d+)', itemController.deleteAction)
+  return router
+}
 export { itemRoutes }

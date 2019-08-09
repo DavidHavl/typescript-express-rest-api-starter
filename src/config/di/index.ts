@@ -35,4 +35,3 @@ const binder = async (container: AwilixContainer) => {
 }
 
 export { container as DIContainer, types as DITypes, binder as DIBinder }
-

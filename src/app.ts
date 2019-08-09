@@ -9,17 +9,19 @@ import { config } from 'dotenv'
 import compression from 'compression'  // compresses requests
 import 'express-async-errors'
 import { RateLimiterMemory } from 'rate-limiter-flexible'
-import httpErrorHandler from '@/lib/middleware/httpErrorHandler'
-import PrettyError from 'pretty-error'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import { DIContainer, DITypes, DIBinder } from '@/config/di'
 import LogServiceInterface from '@/lib/interfaces/services/LogServiceInterface'
 import DbServiceInterface from '@/lib/interfaces/services/DbServiceInterface'
 import CacheServiceInterface from '@/lib/interfaces/services/CacheServiceInterface'
+import halContentType from '@/lib/middleware/halContentType'
+import NotFoundError from '@/lib/errors/http/NotFoundError'
+import httpErrorHandler from '@/lib/middleware/httpErrorHandler'
+import PrettyError from 'pretty-error'
 
 // custom
-import routes from '@/config/routes'
+import routes from '@/config/router/routes'
 
 class App {
   public express: express.Application
@@ -38,9 +40,9 @@ class App {
     this.express.use(bodyParser.urlencoded({ extended: true, limit: '100kb' }))
     // compression
     this.express.use(compression())
-    // let node server files in static folder
-    // initStaticFiles()
-    //
+    // set HAL response content type
+    this.express.use(halContentType)
+    // init CORS
     this.initCors()
     // logging
     this.initRequestLogging()
@@ -53,13 +55,20 @@ class App {
   /**
    * setup the app and perform async operations so everything is ready for the server to start listening
    */
+  /**
+   * setup the app and perform async operations so everything is ready for the server to start listening
+   */
   public async setup () {
-    // do async work before calling listen
-    await this.initDI()
-  }
-
-  async initDI () {
+    // setup DI (which is async)
     await DIBinder(DIContainer)
+    // now that DI is setup and populated, init routes and other things that depend on it
+    this.express.use('/', routes())
+    // 404 route
+    this.express.use((req, res, next) => {
+      throw new NotFoundError() // 404
+    })
+    // init error handling after all routes hhave been defined
+    this.initErrorHandling()
   }
 
   getDatabase (): DbServiceInterface {
