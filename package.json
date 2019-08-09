@@ -37,8 +37,10 @@
   "author": "David Havl",
   "license": "MIT",
   "dependencies": {
+    "@types/config": "^0.0.34",
     "awilix": "^4.2.2",
     "compression": "^1.7.4",
+    "config": "^3.2.2",
     "dotenv": "^8.0.0",
     "escape-html": "^1.0.3",
     "express": "^4.17.1",

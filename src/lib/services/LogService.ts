@@ -3,10 +3,7 @@
  * @license    MIT
  */
 import LogServiceInterface from '@/lib/interfaces/services/LogServiceInterface'
-import 'reflect-metadata';
-import { injectable } from 'inversify'
 
-@injectable()
 class LogService implements LogServiceInterface {
   constructor () {
 

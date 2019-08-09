@@ -3,12 +3,11 @@
  * @license    MIT
  */
 import DbServiceInterface from '@/lib/interfaces/services/DbServiceInterface'
-import 'reflect-metadata';
-import { injectable } from 'inversify'
+import config from 'config'
 
-@injectable()
 class DbService implements DbServiceInterface {
   constructor () { // use constructor variables to do dependency injections
+    const dbConfig = config.get('db')
   }
 
   close (): void {

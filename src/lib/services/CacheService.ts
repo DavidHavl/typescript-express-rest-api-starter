@@ -3,10 +3,7 @@
  * @license    MIT
  */
 import CacheServiceInterface from '@/lib/interfaces/services/CacheServiceInterface'
-import 'reflect-metadata';
-import { injectable } from 'inversify'
 
-@injectable()
 class CacheService implements CacheServiceInterface {
   constructor () {
   }
