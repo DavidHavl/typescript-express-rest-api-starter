@@ -97,6 +97,14 @@ describe('Base Input Validator', () => {
     expect(instance.getCleanData()).toEqual(expected)
   })
 
+  test('getCleanData method returns empty object on error', () => {
+    const data = {
+      id: 123,
+    }
+    instance.isValid(data)
+    expect(instance.getCleanData()).toEqual({})
+  })
+
   test('stripUnknownFields flag strips unknown fields', () => {
     const data = {
       id: 123,

@@ -9,7 +9,7 @@ import joi, { SchemaLike, ValidationError as JoiValidationError, ValidationError
 class BaseInputValidator implements InputValidatorInterface {
   private stripUnknownFields: boolean = true
   private data: object | null = null
-  private cleanData: object | null = null
+  private cleanData: object = {}
   private errorObject: JoiValidationError | null = null
   public schema: SchemaLike = joi.object().keys({})
 
@@ -30,16 +30,16 @@ class BaseInputValidator implements InputValidatorInterface {
     }
     const result = joi.validate(this.data, this.schema, { allowUnknown: true, stripUnknown: this.stripUnknownFields })
     if (result.error === null) {
-      this.cleanData = result.value
+      this.cleanData = result.value === null ? {} : result.value
       this.errorObject = null
     } else {
-      this.cleanData = null
+      this.cleanData = {}
       this.errorObject = result.error
     }
     return this.errorObject === null
   }
 
-  getCleanData (): object | null {
+  getCleanData (): object {
     return this.cleanData
   }
 
